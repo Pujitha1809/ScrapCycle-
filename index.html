@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScrapCycle - Online Recycling Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-recycle"></i>
+                    <h1>ScrapCycle</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for items...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a href="login.html"><i class="fas fa-user"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html?category=clothes">Clothes</a></li>
+                    <li><a href="products.html?category=furniture">Furniture</a></li>
+                    <li><a href="products.html?category=books">Books</a></li>
+                    <li><a href="products.html?category=electronics">Electronics</a></li>
+                    <li><a href="products.html?category=tools">Tools</a></li>
+                    <li><a href="products.html">All Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Give Your Scraps a New Life</h2>
+            <p>ScrapCycle is your online marketplace for buying and selling second-hand items. Join our community to reduce waste, save money, and promote sustainability.</p>
+            <a href="products.html" class="cta-button">Start Shopping Now</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Browse Categories</h2>
+            <div class="category-grid">
+                <div class="category-card" onclick="location.href='products.html?category=clothes'">
+                    <i class="fas fa-tshirt"></i>
+                    <h3>Clothes</h3>
+                </div>
+                <div class="category-card" onclick="location.href='products.html?category=furniture'">
+                    <i class="fas fa-couch"></i>
+                    <h3>Furniture</h3>
+                </div>
+                <div class="category-card" onclick="location.href='products.html?category=books'">
+                    <i class="fas fa-book"></i>
+                    <h3>Books</h3>
+                </div>
+                <div class="category-card" onclick="location.href='products.html?category=electronics'">
+                    <i class="fas fa-laptop"></i>
+                    <h3>Electronics</h3>
+                </div>
+                <div class="category-card" onclick="location.href='products.html?category=tools'">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools</h3>
+                </div>
+                <div class="category-card" onclick="location.href='products.html'">
+                    <i class="fas fa-ellipsis-h"></i>
+                    <h3>View All</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="product-grid" id="featured-products">
+                <!-- Featured products will be loaded here -->
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="products.html" class="see-all-btn">
+                    See all products <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose ScrapCycle?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Eco-Friendly</h3>
+                    <p>Reduce landfill waste by giving items a second life and promoting a circular economy.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Transactions</h3>
+                    <p>Buy and sell with confidence using our secure payment and rating systems.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Local Pickup</h3>
+                    <p>Arrange convenient local pickup options to save on shipping costs.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Advanced Search</h3>
+                    <p>Find exactly what you're looking for with our powerful search and filtering tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ScrapCycle</h3>
+                    <p>Your online marketplace for buying and selling second-hand items, promoting sustainability and reducing environmental impact.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="register.html">Sell Items</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Green Street, Eco City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@scrapcycle.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 ScrapCycle. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load featured products on home page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFeaturedProducts();
+        });
+
+        function loadFeaturedProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const featuredContainer = document.getElementById('featured-products');
+            
+            // Show only 6 featured products
+            const featuredProducts = products.filter(p => p.featured).slice(0, 6);
+            
+            if (featuredProducts.length === 0) {
+                featuredContainer.innerHTML = '<p>No featured products available.</p>';
+                return;
+            }
+
+            featuredContainer.innerHTML = featuredProducts.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/250x180/4CAF50/white?text=Product+Image'">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-tag"></i> ${product.category}</span>
+                            <span><i class="fas fa-star"></i> ${product.rating || '4.5'}</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">ADD TO CART</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - ScrapCycle</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .search-bar {
+            display: flex;
+            flex: 0 0 40%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: #2E7D32;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-actions a:hover {
+            text-decoration: underline;
+        }
+
+        nav {
+            background-color: #2E7D32;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .nav-links li {
+            margin-right: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #C8E6C9;
+        }
+
+        /* Products page styles */
+        .products-page {
+            padding: 30px 0;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .products-header h1 {
+            font-size: 2rem;
+            color: #2E7D32;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .filter-controls select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            font-size: 1rem;
+        }
+
+        /* Product grid styles */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2E7D32;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #E91E63;
+            margin-bottom: 15px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .product-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #2E7D32;
+        }
+
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Admin panel styles */
+        .admin-panel {
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-panel h2 {
+            margin-bottom: 20px;
+            color: #2E7D32;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2E7D32;
+        }
+
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .image-preview {
+            margin-top: 10px;
+            max-width: 200px;
+            max-height: 150px;
+            border: 1px dashed #ddd;
+            padding: 5px;
+            display: none;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 140px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .products-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .filter-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-recycle"></i>
+                        <h1>ScrapCycle</h1>
+                    </a>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search for items...">
+                    <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a href="login.html" id="user-link"><i class="fas fa-user"></i> Login</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="products.html">All Products</a></li>
+                    <li><a href="products.html?category=clothes">Clothes</a></li>
+                    <li><a href="products.html?category=furniture">Furniture</a></li>
+                    <li><a href="products.html?category=books">Books</a></li>
+                    <li><a href="products.html?category=electronics">Electronics</a></li>
+                    <li><a href="products.html?category=tools">Tools</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products-page">
+        <div class="container">
+            <div class="products-header">
+                <h1 id="page-title">All Products</h1>
+                <div class="filter-controls">
+                    <select id="categoryFilter" onchange="filterProducts()">
+                        <option value="">All Categories</option>
+                        <option value="clothes">Clothes</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="books">Books</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="tools">Tools</option>
+                    </select>
+                    <select id="sortFilter" onchange="sortProducts()">
+                        <option value="name">Sort by Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="product-grid" id="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel for Adding Products with Local Images -->
+    <section class="admin-panel">
+        <div class="container">
+            <h2>Add New Product</h2>
+            <form id="productForm" class="admin-form">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price (₹)</label>
+                    <input type="number" id="productPrice" min="0" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Category</label>
+                    <select id="productCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="clothes">Clothes</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="books">Books</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="tools">Tools</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productCondition">Condition</label>
+                    <select id="productCondition" required>
+                        <option value="">Select Condition</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" required></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label for="productImage">Product Image</label>
+                    <input type="file" id="productImage" accept="image/*" required>
+                    <div class="image-preview" id="imagePreview">
+                        <img id="previewImage" src="" alt="Image Preview">
+                    </div>
+                </div>
+                <div class="admin-buttons">
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Initialize products if not exists
+        function initializeProducts() {
+            const existingProducts = JSON.parse(localStorage.getItem('products'));
+            if (!existingProducts || existingProducts.length === 0) {
+                const sampleProducts = [
+                    // Clothes
+                    { 
+                        id: 1, 
+                        name: "Men's Denim Jacket", 
+                        price: 2199, 
+                        category: "clothes", 
+                        condition: "Good", 
+                        description: "Lightly used denim jacket, size M", 
+                        image: "products\mens-denim-jacket.jpeg",
+                        featured: true 
+                    },
+                    { 
+                        id: 2, 
+                        name: "Women's Summer Dress", 
+                        price: 1499, 
+                        category: "clothes", 
+                        condition: "Excellent", 
+                        description: "Floral summer dress, size S", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Summer+Dress",
+                        featured: false 
+                    },
+                    { 
+                        id: 3, 
+                        name: "Kids Winter Coat", 
+                        price: 1299, 
+                        category: "clothes", 
+                        condition: "Good", 
+                        description: "Warm winter coat for kids, age 5-6", 
+                        image: "image/mens denim jacket.jpeg",
+                        featured: true 
+                    },
+                    { 
+                        id: 4, 
+                        name: "Vintage T-Shirt Collection", 
+                        price: 2899, 
+                        category: "clothes", 
+                        condition: "Fair", 
+                        description: "Set of 3 vintage band t-shirts", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Vintage+T-Shirts",
+                        featured: false 
+                    },
+                    
+                    // Furniture
+                    { 
+                        id: 5, 
+                        name: "Wooden Dining Table", 
+                        price: 9999, 
+                        category: "furniture", 
+                        condition: "Good", 
+                        description: "Solid wood dining table, 6 seats", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Dining+Table",
+                        featured: true 
+                    },
+                    { 
+                        id: 6, 
+                        name: "Office Chair", 
+                        price: 3799, 
+                        category: "furniture", 
+                        condition: "Excellent", 
+                        description: "Ergonomic office chair, barely used", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Office+Chair",
+                        featured: false 
+                    },
+                    { 
+                        id: 7, 
+                        name: "Bookshelf", 
+                        price: 5499, 
+                        category: "furniture", 
+                        condition: "Good", 
+                        description: "5-shelf wooden bookshelf", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Bookshelf",
+                        featured: true 
+                    },
+                    { 
+                        id: 8, 
+                        name: "Coffee Table", 
+                        price: 2899, 
+                        category: "furniture", 
+                        condition: "Fair", 
+                        description: "Glass top coffee table", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Coffee+Table",
+                        featured: false 
+                    },
+                    
+                    // Books
+                    { 
+                        id: 13, 
+                        name: "The Great Gatsby", 
+                        price: 299, 
+                        category: "books", 
+                        condition: "Good", 
+                        description: "Classic novel by F. Scott Fitzgerald", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Great+Gatsby",
+                        featured: true 
+                    },
+                    { 
+                        id: 14, 
+                        name: "To Kill a Mockingbird", 
+                        price: 349, 
+                        category: "books", 
+                        condition: "Excellent", 
+                        description: "Harper Lee's masterpiece", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Mockingbird",
+                        featured: false 
+                    },
+                    { 
+                        id: 15, 
+                        name: "Harry Potter Collection", 
+                        price: 1999, 
+                        category: "books", 
+                        condition: "Good", 
+                        description: "Complete 7-book set", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Harry+Potter",
+                        featured: true 
+                    },
+                    { 
+                        id: 16, 
+                        name: "1984 by George Orwell", 
+                        price: 279, 
+                        category: "books", 
+                        condition: "Fair", 
+                        description: "Dystopian classic", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=1984",
+                        featured: false 
+                    },
+                    { 
+                        id: 17, 
+                        name: "Pride and Prejudice", 
+                        price: 249, 
+                        category: "books", 
+                        condition: "Excellent", 
+                        description: "Jane Austen's romantic novel", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Pride+Prejudice",
+                        featured: true 
+                    },
+                    { 
+                        id: 23, 
+                        name: "The Hobbit", 
+                        price: 399, 
+                        category: "books", 
+                        condition: "Good", 
+                        description: "J.R.R. Tolkien's fantasy adventure", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=The+Hobbit",
+                        featured: false 
+                    },
+                    { 
+                        id: 24, 
+                        name: "Lord of the Rings Trilogy", 
+                        price: 1299, 
+                        category: "books", 
+                        condition: "Excellent", 
+                        description: "Complete LOTR trilogy in box set", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=LOTR+Trilogy",
+                        featured: true 
+                    },
+                    { 
+                        id: 25, 
+                        name: "The Catcher in the Rye", 
+                        price: 299, 
+                        category: "books", 
+                        condition: "Good", 
+                        description: "J.D. Salinger's classic novel", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Catcher+Rye",
+                        featured: false 
+                    },
+                    { 
+                        id: 26, 
+                        name: "The Alchemist", 
+                        price: 349, 
+                        category: "books", 
+                        condition: "Excellent", 
+                        description: "Paulo Coelho's inspirational novel", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=The+Alchemist",
+                        featured: true 
+                    },
+                    { 
+                        id: 27, 
+                        name: "The Da Vinci Code", 
+                        price: 299, 
+                        category: "books", 
+                        condition: "Good", 
+                        description: "Dan Brown's mystery thriller", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Da+Vinci+Code",
+                        featured: false 
+                    },
+                    { 
+                        id: 28, 
+                        name: "The Shining", 
+                        price: 399, 
+                        category: "books", 
+                        condition: "Fair", 
+                        description: "Stephen King's horror masterpiece", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=The+Shining",
+                        featured: true 
+                    },
+                    
+                    // Electronics
+                    { 
+                        id: 18, 
+                        name: "Samsung Galaxy S10", 
+                        price: 18999, 
+                        category: "electronics", 
+                        condition: "Good", 
+                        description: "Used smartphone, 128GB storage", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Samsung+S10",
+                        featured: true 
+                    },
+                    { 
+                        id: 19, 
+                        name: "Sony Headphones", 
+                        price: 2499, 
+                        category: "electronics", 
+                        condition: "Excellent", 
+                        description: "Wireless noise-cancelling headphones", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Sony+Headphones",
+                        featured: false 
+                    },
+                    { 
+                        id: 20, 
+                        name: "Apple iPad Air", 
+                        price: 27999, 
+                        category: "electronics", 
+                        condition: "Good", 
+                        description: "4th generation, 64GB", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=iPad+Air",
+                        featured: true 
+                    },
+                    { 
+                        id: 21, 
+                        name: "Dell Laptop", 
+                        price: 34999, 
+                        category: "electronics", 
+                        condition: "Fair", 
+                        description: "Inspiron series, 8GB RAM, 512GB SSD", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Dell+Laptop",
+                        featured: false 
+                    },
+                    { 
+                        id: 22, 
+                        name: "Canon DSLR Camera", 
+                        price: 28999, 
+                        category: "electronics", 
+                        condition: "Excellent", 
+                        description: "EOS Rebel T7 with kit lens", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Canon+DSLR",
+                        featured: true 
+                    },
+                    { 
+                        id: 29, 
+                        name: "Apple MacBook Pro", 
+                        price: 45999, 
+                        category: "electronics", 
+                        condition: "Excellent", 
+                        description: "13-inch, 256GB SSD, 8GB RAM", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=MacBook+Pro",
+                        featured: true 
+                    },
+                    { 
+                        id: 30, 
+                        name: "Samsung Smart TV", 
+                        price: 32999, 
+                        category: "electronics", 
+                        condition: "Good", 
+                        description: "55-inch 4K UHD Smart TV", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Smart+TV",
+                        featured: false 
+                    },
+                    { 
+                        id: 31, 
+                        name: "PlayStation 5", 
+                        price: 38999, 
+                        category: "electronics", 
+                        condition: "Excellent", 
+                        description: "Gaming console with one controller", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=PS5",
+                        featured: true 
+                    },
+                    { 
+                        id: 32, 
+                        name: "Nintendo Switch", 
+                        price: 21999, 
+                        category: "electronics", 
+                        condition: "Good", 
+                        description: "Gaming console with Joy-Cons", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Nintendo+Switch",
+                        featured: false 
+                    },
+                    { 
+                        id: 33, 
+                        name: "Apple Watch Series 6", 
+                        price: 18999, 
+                        category: "electronics", 
+                        condition: "Excellent", 
+                        description: "GPS + Cellular, 44mm", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Apple+Watch",
+                        featured: true 
+                    },
+                    { 
+                        id: 34, 
+                        name: "DJI Mavic Air 2", 
+                        price: 67999, 
+                        category: "electronics", 
+                        condition: "Good", 
+                        description: "Drone with 4K camera", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=DJI+Drone",
+                        featured: false 
+                    },
+                    
+                    // Tools
+                    { 
+                        id: 9, 
+                        name: "STANLEY Claw Hammer", 
+                        price: 625, 
+                        category: "tools", 
+                        condition: "Excellent", 
+                        description: "Professional claw hammer with steel shaft", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Claw+Hammer",
+                        featured: true 
+                    },
+                    { 
+                        id: 10, 
+                        name: "Munix Scissors Set", 
+                        price: 375, 
+                        category: "tools", 
+                        condition: "Good", 
+                        description: "Assorted scissors for various uses", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Scissors+Set",
+                        featured: false 
+                    },
+                    { 
+                        id: 11, 
+                        name: "Screwdriver Kit", 
+                        price: 1079, 
+                        category: "tools", 
+                        condition: "Excellent", 
+                        description: "30-piece magnetic screwdriver set", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Screwdriver+Kit",
+                        featured: true 
+                    },
+                    { 
+                        id: 12, 
+                        name: "Electric Drill Machine", 
+                        price: 2499, 
+                        category: "tools", 
+                        condition: "Good", 
+                        description: "Cordless electric drill with accessories", 
+                        image: "https://via.placeholder.com/250x180/4CAF50/white?text=Electric+Drill",
+                        featured: false 
+                    }
+                ];
+                localStorage.setItem('products', JSON.stringify(sampleProducts));
+            }
+        }
+
+        // Load products based on category
+        function loadProducts() {
+            initializeProducts();
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            const search = urlParams.get('search');
+            
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            let filteredProducts = products;
+            
+            // Filter by category
+            if (category) {
+                filteredProducts = products.filter(p => p.category === category);
+                document.getElementById('page-title').textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                document.getElementById('categoryFilter').value = category;
+            }
+            
+            // Filter by search
+            if (search) {
+                filteredProducts = filteredProducts.filter(p => 
+                    p.name.toLowerCase().includes(search.toLowerCase()) ||
+                    p.description.toLowerCase().includes(search.toLowerCase())
+                );
+                document.getElementById('searchInput').value = search;
+            }
+            
+            displayProducts(filteredProducts);
+        }
+
+        function displayProducts(products) {
+            const container = document.getElementById('products-grid');
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p class="no-products">No products found matching your criteria.</p>';
+                return;
+            }
+            
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/250x180/4CAF50/white?text=Product+Image'">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-tag"></i> ${product.category}</span>
+                            <span><i class="fas fa-star"></i> ${product.condition}</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">ADD TO CART</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter').value;
+            if (category) {
+                window.location.href = `products.html?category=${category}`;
+            } else {
+                window.location.href = 'products.html';
+            }
+        }
+
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm) {
+                window.location.href = `products.html?search=${encodeURIComponent(searchTerm)}`;
+            } else {
+                window.location.href = 'products.html';
+            }
+        }
+
+        function sortProducts() {
+            const sortBy = document.getElementById('sortFilter').value;
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            let sortedProducts = [...products];
+            
+            if (sortBy === 'price-low') {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (sortBy === 'price-high') {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (sortBy === 'name') {
+                sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            
+            displayProducts(sortedProducts);
+        }
+
+        // Check user login status
+        function checkUserStatus() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const userLink = document.getElementById('user-link');
+            
+            if (currentUser) {
+                userLink.innerHTML = `<i class="fas fa-user"></i> ${currentUser.fullName}`;
+                userLink.href = "#";
+                userLink.onclick = function() {
+                    if (confirm('Do you want to logout?')) {
+                        localStorage.removeItem('currentUser');
+                        window.location.reload();
+                    }
+                };
+            }
+        }
+
+        // Add to cart function
+        function addToCart(productId) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) {
+                alert('Product not found!');
+                return;
+            }
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(`${product.name} added to cart!`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+
+        // Product form handling
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            addNewProduct();
+        });
+
+        // Image preview functionality
+        document.getElementById('productImage').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    const previewImage = document.getElementById('previewImage');
+                    previewImage.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Add new product with local image
+        function addNewProduct() {
+            const name = document.getElementById('productName').value;
+            const price = parseInt(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const condition = document.getElementById('productCondition').value;
+            const description = document.getElementById('productDescription').value;
+            const imageFile = document.getElementById('productImage').files[0];
+            
+            if (!imageFile) {
+                alert('Please select an image for the product');
+                return;
+            }
+            
+            // Convert image to base64 for storage
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imageData = event.target.result;
+                
+                // Get existing products
+                const products = JSON.parse(localStorage.getItem('products')) || [];
+                
+                // Create new product
+                const newProduct = {
+                    id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
+                    name: name,
+                    price: price,
+                    category: category,
+                    condition: condition,
+                    description: description,
+                    image: imageData, // Store base64 image data
+                    featured: false
+                };
+                
+                // Add to products array
+                products.push(newProduct);
+                
+                // Save to localStorage
+                localStorage.setItem('products', JSON.stringify(products));
+                
+                // Reset form
+                resetForm();
+                
+                // Reload products
+                loadProducts();
+                
+                alert('Product added successfully!');
+            };
+            
+            reader.readAsDataURL(imageFile);
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('imagePreview').style.display = 'none';
+        }
+
+        // Load products when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            checkUserStatus();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

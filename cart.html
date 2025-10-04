@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - ScrapCycle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-recycle"></i>
+                        <h1>ScrapCycle</h1>
+                    </a>
+                </div>
+                <div class="user-actions">
+                    <a href="products.html"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <h1>Your Shopping Cart</h1>
+            
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-line">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping:</span>
+                        <span id="shipping">₹50.00</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total:</span>
+                        <span id="total">₹0.00</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                    <button class="continue-shopping" onclick="window.location.href='products.html'">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const cartContainer = document.getElementById('cart-items');
+            
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Your cart is empty</h3>
+                        <p>Add some items to your cart to see them here</p>
+                        <button onclick="window.location.href='products.html'" class="cta-button">Start Shopping</button>
+                    </div>
+                `;
+                updateSummary(0);
+                return;
+            }
+            
+            let subtotal = 0;
+            cartContainer.innerHTML = cart.map(item => {
+                const product = products.find(p => p.id === item.productId);
+                if (product) {
+                    const itemTotal = product.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    return `
+                        <div class="cart-item">
+                            <div class="item-image">
+                                <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/80x80/4CAF50/white?text=Product+Image'">
+                            </div>
+                            <div class="item-details">
+                                <h3>${product.name}</h3>
+                                <p>${product.description}</p>
+                                <div class="item-price">₹${product.price}</div>
+                            </div>
+                            <div class="item-quantity">
+                                <button onclick="updateQuantity(${product.id}, ${item.quantity - 1})">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateQuantity(${product.id}, ${item.quantity + 1})">+</button>
+                            </div>
+                            <div class="item-total">₹${itemTotal.toFixed(2)}</div>
+                            <button class="remove-btn" onclick="removeFromCart(${product.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+                return '';
+            }).join('');
+            
+            updateSummary(subtotal);
+        }
+
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.productId === productId);
+            
+            if (itemIndex > -1) {
+                cart[itemIndex].quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadCart();
+                updateCartCount();
+            }
+        }
+
+        function removeFromCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.productId !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+            updateCartCount();
+        }
+
+        function updateSummary(subtotal) {
+            const shipping = 50.00;
+            const total = subtotal + shipping;
+            
+            document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+        }
+
+        function checkout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            if (!currentUser) {
+                alert('Please login to complete your purchase.');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // In a real application, you would process payment here
+            alert('Thank you for your purchase! Your order has been placed successfully.');
+            
+            // Clear cart after successful purchase
+            localStorage.removeItem('cart');
+            loadCart();
+            updateCartCount();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ScrapCycle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-recycle"></i>
+                        <h1>ScrapCycle</h1>
+                    </a>
+                </div>
+                <div class="user-actions">
+                    <a href="login.html"><i class="fas fa-user"></i> Login</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Registration Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <h2>Create Your Account</h2>
+                <p>Join ScrapCycle to start buying and selling second-hand items</p>
+                
+                <div class="tab-buttons">
+                    <button id="buyerTab" class="tab-button active">Buyer</button>
+                    <button id="sellerTab" class="tab-button">Seller</button>
+                </div>
+                
+                <!-- Buyer Registration Form -->
+                <div id="buyerForm" class="form-container active">
+                    <form id="buyerRegistrationForm">
+                        <div class="form-group">
+                            <label for="buyerFullName">Full Name</label>
+                            <input type="text" id="buyerFullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="buyerMobile">Mobile No</label>
+                            <input type="tel" id="buyerMobile" name="mobile" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="buyerEmail">Email Address</label>
+                            <input type="email" id="buyerEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="buyerAddress">Address</label>
+                            <textarea id="buyerAddress" name="address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="buyerPassword">Password</label>
+                            <input type="password" id="buyerPassword" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="buyerConfirmPassword">Confirm Password</label>
+                            <input type="password" id="buyerConfirmPassword" name="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Create Buyer Account</button>
+                    </form>
+                    <p class="auth-link">
+                        Already have an account? <a href="login.html">Login here</a>
+                    </p>
+                </div>
+                
+                <!-- Seller Registration Form -->
+                <div id="sellerForm" class="form-container">
+                    <form id="sellerRegistrationForm">
+                        <div class="form-group">
+                            <label for="sellerFullName">Full Name</label>
+                            <input type="text" id="sellerFullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerMobile">Mobile No</label>
+                            <input type="tel" id="sellerMobile" name="mobile" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerBusiness">Business Name</label>
+                            <input type="text" id="sellerBusiness" name="businessName">
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerEmail">Email Address</label>
+                            <input type="email" id="sellerEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerAddress">Business Address</label>
+                            <textarea id="sellerAddress" name="address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerPassword">Password</label>
+                            <input type="password" id="sellerPassword" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerConfirmPassword">Confirm Password</label>
+                            <input type="password" id="sellerConfirmPassword" name="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Create Seller Account</button>
+                    </form>
+                    <p class="auth-link">
+                        Already have an account? <a href="login.html">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Tab functionality
+        document.getElementById('buyerTab').addEventListener('click', function() {
+            switchTab('buyer');
+        });
+
+        document.getElementById('sellerTab').addEventListener('click', function() {
+            switchTab('seller');
+        });
+
+        function switchTab(tab) {
+            // Update buttons
+            document.getElementById('buyerTab').classList.toggle('active', tab === 'buyer');
+            document.getElementById('sellerTab').classList.toggle('active', tab === 'seller');
+            
+            // Update forms
+            document.getElementById('buyerForm').classList.toggle('active', tab === 'buyer');
+            document.getElementById('sellerForm').classList.toggle('active', tab === 'seller');
+        }
+
+        // Form submission
+        document.getElementById('buyerRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            registerUser('buyer');
+        });
+
+        document.getElementById('sellerRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            registerUser('seller');
+        });
+
+        function registerUser(type) {
+            const form = type === 'buyer' ? 
+                document.getElementById('buyerRegistrationForm') : 
+                document.getElementById('sellerRegistrationForm');
+            
+            const formData = new FormData(form);
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+            
+            const userData = {
+                type: type,
+                fullName: formData.get('fullName'),
+                mobile: formData.get('mobile'),
+                email: formData.get('email'),
+                address: formData.get('address'),
+                password: password,
+                businessName: type === 'seller' ? formData.get('businessName') : null,
+                registeredAt: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Check if email already exists
+            if (users.find(user => user.email === userData.email)) {
+                alert('Email already registered. Please use a different email or login.');
+                return;
+            }
+
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert(`${type.charAt(0).toUpperCase() + type.slice(1)} registration successful! You can now login.`);
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

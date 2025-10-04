@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ScrapCycle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-recycle"></i>
+                        <h1>ScrapCycle</h1>
+                    </a>
+                </div>
+                <div class="user-actions">
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <h2>Login to Your Account</h2>
+                <p>Access your ScrapCycle account to start shopping or selling</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                
+                <p class="auth-link">
+                    Don't have an account? <a href="register.html">Register here</a>
+                </p>
+
+                <div class="demo-accounts">
+                    <h3>Demo Accounts:</h3>
+                    <p><strong>Buyer:</strong> buyer@demo.com / password: 123</p>
+                    <p><strong>Seller:</strong> seller@demo.com / password: 123</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Add demo accounts if they don't exist
+        document.addEventListener('DOMContentLoaded', function() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Add demo buyer account
+            if (!users.find(user => user.email === 'buyer@demo.com')) {
+                users.push({
+                    type: 'buyer',
+                    fullName: 'Demo Buyer',
+                    mobile: '1234567890',
+                    email: 'buyer@demo.com',
+                    address: '123 Demo Street',
+                    password: '123',
+                    registeredAt: new Date().toISOString()
+                });
+            }
+            
+            // Add demo seller account
+            if (!users.find(user => user.email === 'seller@demo.com')) {
+                users.push({
+                    type: 'seller',
+                    fullName: 'Demo Seller',
+                    mobile: '0987654321',
+                    email: 'seller@demo.com',
+                    businessName: 'Demo Store',
+                    address: '456 Business Avenue',
+                    password: '123',
+                    registeredAt: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem('users', JSON.stringify(users));
+        });
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Save current user session
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert(`Welcome back, ${user.fullName}!`);
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
